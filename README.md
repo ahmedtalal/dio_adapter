@@ -13,7 +13,7 @@ DioBuilder is a Dart package that simplifies HTTP requests using the Dio library
 
 ### Installation
 
-Add the `dio_builder` package to your `pubspec.yaml` file:
+Add the `dio_adapter` package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
