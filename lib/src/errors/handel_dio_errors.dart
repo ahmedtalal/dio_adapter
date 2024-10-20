@@ -1,7 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:dio/dio.dart';
-import 'package:dio_builder/src/errors/status_code.dart';
+import 'package:dio_adapter/src/errors/status_code.dart';
 import 'exception_model.dart';
 
 const _connectionTimeoutError = 'connectionTimeoutError';

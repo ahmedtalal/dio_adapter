@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:dio_builder/src/dio_helper/api_curds.dart';
-import 'package:dio_builder/src/dio_helper/api_interceptor.dart';
-import 'package:dio_builder/src/errors/exception_model.dart';
-import 'package:dio_builder/src/errors/handel_dio_errors.dart';
+import 'package:dio_adapter/src/dio_helper/api_curds.dart';
+import 'package:dio_adapter/src/dio_helper/api_interceptor.dart';
+import 'package:dio_adapter/src/errors/exception_model.dart';
+import 'package:dio_adapter/src/errors/handel_dio_errors.dart';
 import 'package:either_dart/either.dart';
 
-class DioBuilderBase implements IApiCurds<Either<String, Response>> {
+class DioAdapterBase implements IApiCurds<Either<String, Response>> {
   final String baseUrl;
   final RequestOptions Function(RequestOptions options)? customRequestHandler;
   final Response Function(Response response)? customResponseHandler;
@@ -15,7 +15,7 @@ class DioBuilderBase implements IApiCurds<Either<String, Response>> {
   final String contentType;
   final Duration connectTimeout, receiveTimeout;
   final ResponseType responseType;
-  DioBuilderBase({
+  DioAdapterBase({
     required this.baseUrl,
     required this.connectTimeout,
     required this.receiveTimeout,

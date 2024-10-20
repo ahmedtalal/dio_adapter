@@ -1,9 +1,9 @@
 // Example usage of DioBuilderBase
 import 'package:dio/dio.dart';
-import 'package:dio_builder/dio_builder.dart';
+import 'package:dio_adapter/dio_adapter.dart';
 
 void main() async {
-  final dioBuilder = DioBuilderBase(
+  final dioBuilder = DioAdapterBase(
     baseUrl: 'https://jsonplaceholder.typicode.com',
     connectTimeout: Duration(seconds: 30),
     receiveTimeout: Duration(seconds: 30),
