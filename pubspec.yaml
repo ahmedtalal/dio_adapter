@@ -1,0 +1,18 @@
+name: dio_builder
+description: is a Dart package that simplifies HTTP requests using the Dio library. It provides a structured way to handle API CRUD operations with customizable request and response handling, error management, and HTTP client adaptation.
+version: 1.0.0
+# repository: https://github.com/ahmedtalal/dio_builder
+
+environment:
+  sdk: ^3.5.3
+
+# Add regular dependencies here.
+dependencies:
+  dio: ^5.7.0
+  logger: ^2.4.0
+  either_dart: ^1.0.0
+  # path: ^1.8.0
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.24.0
