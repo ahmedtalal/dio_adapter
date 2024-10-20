@@ -17,4 +17,4 @@ Add the `dio_builder` package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dio_builder: ^1.0.0  # Replace with the latest version
+  dio_builder: ^1.1.0  # Replace with the latest version
