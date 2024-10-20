@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library;
 
-export 'src/dio_builder_base.dart';
+export 'src/dio_adapter_base.dart';
 
 // TODO: Export any libraries intended for clients of this package.

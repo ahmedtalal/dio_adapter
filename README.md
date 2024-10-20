@@ -1,4 +1,4 @@
-# DioBuilderBase
+# DioAdapterBase
 
 DioBuilder is a Dart package that simplifies HTTP requests using the Dio library. It provides a structured way to handle API CRUD operations with customizable request and response handling, error management, and HTTP client adaptation.
 
@@ -17,4 +17,4 @@ Add the `dio_builder` package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dio_builder: ^1.1.0  # Replace with the latest version
+  dio_adapter: ^1.2.0  # Replace with the latest version
