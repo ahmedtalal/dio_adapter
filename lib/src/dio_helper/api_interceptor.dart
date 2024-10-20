@@ -91,7 +91,7 @@ class CustomInterceptors extends Interceptor {
   void _printPrettyJson(
       Map<String, dynamic> jsonData, String tag, String logType) {
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    String prettyJson = encoder.convert(jsonData);
+    String prettyJson = jsonData.toString();
     switch (logType.toLowerCase()) {
       case "request":
         _logger.d("$tag : $prettyJson");

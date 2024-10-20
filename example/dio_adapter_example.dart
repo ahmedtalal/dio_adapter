@@ -1,24 +1,24 @@
 // Example usage of DioBuilderBase
-import 'package:dio/dio.dart';
 import 'package:dio_adapter/dio_adapter.dart';
+import 'package:dio_adapter/src/dio_helper/response_types.dart';
 
 void main() async {
   final dioBuilder = DioAdapterBase(
     baseUrl: 'https://jsonplaceholder.typicode.com',
-    connectTimeout: Duration(seconds: 30),
-    receiveTimeout: Duration(seconds: 30),
-    responseType: ResponseType.json,
-    contentType: Headers.jsonContentType,
+    connectTimeout: Duration(seconds: 10000),
+    receiveTimeout: Duration(seconds: 10000),
+    contentType: "application/json",
+    responseTypeEnum: ResponseTypeEnum.json,
     customRequestHandler: (options) {
-      print('Request: ${options.method} ${options.path}');
+      /// todo:you logic here
       return options;
     },
     customResponseHandler: (response) {
-      print('Response: ${response.statusCode} ${response.data}');
+      /// todo:you logic here
       return response;
     },
     customErrorHandler: (error) {
-      print('Error: ${error.message}');
+      /// todo:you logic here
     },
   );
 
@@ -29,7 +29,7 @@ void main() async {
     (response) => print('GET Response: ${response.data}'),
   );
 
-  // Example POST request
+  //Example POST request
   final postResult = await dioBuilder.post('/posts', body: {'title': 'foo', 'body': 'bar', 'userId': 1});
   postResult.fold(
     (error) => print('POST Error: $error'),
