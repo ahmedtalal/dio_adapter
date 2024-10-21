@@ -1,6 +1,5 @@
 // Example usage of DioBuilderBase
 import 'package:dio_adapter/dio_adapter.dart';
-import 'package:dio_adapter/src/dio_helper/response_types.dart';
 
 void main() async {
   final dioBuilder = DioAdapterBase(
