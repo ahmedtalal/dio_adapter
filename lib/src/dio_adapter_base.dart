@@ -12,7 +12,7 @@ class DioAdapterBase implements IApiCurds {
   final String baseUrl;
   final RequestOptions Function(RequestOptions options)? customRequestHandler;
   final Response Function(Response response)? customResponseHandler;
-  final void Function(DioException error)? customErrorHandler;
+  final DioException Function(DioException error)? customErrorHandler;
   final String contentType;
   final Duration connectTimeout, receiveTimeout;
   final ResponseTypeEnum responseTypeEnum;

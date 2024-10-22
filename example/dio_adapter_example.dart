@@ -18,6 +18,7 @@ void main() async {
     },
     customErrorHandler: (error) {
       /// todo:you logic here
+      return error;
     },
   );
 

@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 class CustomInterceptors extends Interceptor {
   final RequestOptions Function(RequestOptions options)? customRequestHandler;
   final Response Function(Response response)? customResponseHandler;
-  final void Function(DioException error)? customErrorHandler;
+  final DioException Function(DioException error)? customErrorHandler;
   const CustomInterceptors({
     required this.customRequestHandler,
     required this.customResponseHandler,
@@ -67,7 +67,7 @@ class CustomInterceptors extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) {
     /// add custom error handler
     if (customErrorHandler != null) {
-      customErrorHandler!(err);
+     err= customErrorHandler!(err);
     }
     _logger.i(
         "-----------------[ error of request ${err.response?.requestOptions.uri} start ]---------------");
