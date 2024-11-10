@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
@@ -27,7 +26,10 @@ class CustomInterceptors extends Interceptor {
 
     /// Check if the content type is form-data
     if (options.headers['Content-Type'] == 'multipart/form-data') {
-      options.data = FormData.fromMap(options.data);
+      if(options.data is FormData){
+        FormData formData = options.data as FormData;
+        options.data = _formDataToMap(formData);
+      }
     }
 
     ///convert request to json
@@ -95,7 +97,7 @@ class CustomInterceptors extends Interceptor {
 
   void _printPrettyJson(
       Map<String, dynamic> jsonData, String tag, String logType) {
-    const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+   // const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String prettyJson = jsonData.toString();
     switch (logType.toLowerCase()) {
       case "request":
@@ -115,5 +117,20 @@ class CustomInterceptors extends Interceptor {
         _logger.i("$tag : $prettyJson");
         break;
     }
+  }
+
+  /// Convert FormData to Map
+  Map<String, dynamic> _formDataToMap(FormData formData) {
+    final map = <String, dynamic>{};
+    // Add fields to the map
+    for (final field in formData.fields) {
+      map[field.key] = field.value;
+    }
+
+    // Add files to the map
+    for (final file in formData.files) {
+      map[file.key] = file.value.filename;
+    }
+    return map;
   }
 }

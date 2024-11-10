@@ -17,4 +17,4 @@ Add the `dio_adapter` package to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  dio_adapter: ^1.6.0  # this is the latest version
+  dio_adapter: ^1.6.1  # this is the latest version

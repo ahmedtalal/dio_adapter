@@ -1,3 +1,3 @@
-## 1.6.0
+## 1.6.1
 
-- In this version, if the request's content type is multipart/form-data, the form data will be logged for easier debugging and inspection.
+- In this version,I have added error handling to manage cases where the request content type is multipart/form-data. If an error occurs while processing the form data, it will now be logged with appropriate details for easier debugging.
