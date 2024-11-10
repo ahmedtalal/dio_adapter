@@ -25,6 +25,11 @@ class CustomInterceptors extends Interceptor {
       options = customRequestHandler!(options);
     }
 
+    /// Check if the content type is form-data
+    if (options.headers['Content-Type'] == 'multipart/form-data') {
+      options.data = FormData.fromMap(options.data);
+    }
+
     ///convert request to json
     var requestData = {
       'method': options.method,
