@@ -24,12 +24,15 @@ class CustomInterceptors extends Interceptor {
       options = customRequestHandler!(options);
     }
 
+    dynamic data ; // variable to store data
     /// Check if the content type is form-data
     if (options.headers['Content-Type'] == 'multipart/form-data') {
       if(options.data is FormData){
         FormData formData = options.data as FormData;
-        options.data = _formDataToMap(formData);
+        data = _formDataToMap(formData);
       }
+    }else {
+      data = options.data;
     }
 
     ///convert request to json
@@ -37,7 +40,7 @@ class CustomInterceptors extends Interceptor {
       'method': options.method,
       'url': options.uri.toString(),
       'headers': options.headers,
-      'body': options.data
+      'body': data
     };
     _logger
         .i("-----------------[ request ${options.uri} start ]---------------");
