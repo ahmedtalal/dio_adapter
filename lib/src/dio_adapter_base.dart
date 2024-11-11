@@ -10,9 +10,9 @@ import 'package:either_dart/either.dart';
 
 class DioAdapterBase implements IApiCurds {
   final String baseUrl;
-  final RequestOptions Function(RequestOptions options)? customRequestHandler;
-  final Response Function(Response response)? customResponseHandler;
-  final DioException Function(DioException error)? customErrorHandler;
+  final Future<RequestOptions> Function(RequestOptions options)? customRequestHandler;
+  final Future<Response> Function(Response response)? customResponseHandler;
+  final Future<DioException> Function(DioException error)? customErrorHandler;
   final String contentType;
   final Duration connectTimeout, receiveTimeout;
   final ResponseTypeEnum responseTypeEnum;

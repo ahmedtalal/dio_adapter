@@ -8,15 +8,15 @@ void main() async {
     receiveTimeout: Duration(seconds: 10000),
     contentType: "application/json",
     responseTypeEnum: ResponseTypeEnum.json,
-    customRequestHandler: (options) {
+    customRequestHandler: (options) async{
       /// todo:you logic here
       return options;
     },
-    customResponseHandler: (response) {
+    customResponseHandler: (response) async{
       /// todo:you logic here
       return response;
     },
-    customErrorHandler: (error) {
+    customErrorHandler: (error) async{
       /// todo:you logic here
       return error;
     },

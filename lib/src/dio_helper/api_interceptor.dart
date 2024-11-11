@@ -3,9 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 class CustomInterceptors extends Interceptor {
-  final RequestOptions Function(RequestOptions options)? customRequestHandler;
-  final Response Function(Response response)? customResponseHandler;
-  final DioException Function(DioException error)? customErrorHandler;
+  final Future<RequestOptions> Function(RequestOptions options)? customRequestHandler;
+  final Future<Response> Function(Response response)? customResponseHandler;
+  final Future<DioException> Function(DioException error)? customErrorHandler;
   const CustomInterceptors({
     required this.customRequestHandler,
     required this.customResponseHandler,
@@ -18,10 +18,10 @@ class CustomInterceptors extends Interceptor {
         : Level.debug, // Disable logs in release mode
   );
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
     /// add custom request handler
     if (customRequestHandler != null) {
-      options = customRequestHandler!(options);
+      options = await customRequestHandler!(options);
     }
 
     dynamic data ; // variable to store data
@@ -50,10 +50,10 @@ class CustomInterceptors extends Interceptor {
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async{
     /// add custom response handler
     if (customResponseHandler != null) {
-      response = customResponseHandler!(response);
+      response = await customResponseHandler!(response);
     }
     _logger.i(
         "-----------------[ response of request ${response.requestOptions.uri} start ]---------------");
@@ -74,10 +74,10 @@ class CustomInterceptors extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async{
     /// add custom error handler
     if (customErrorHandler != null) {
-     err= customErrorHandler!(err);
+     err= await customErrorHandler!(err);
     }
     _logger.i(
         "-----------------[ error of request ${err.response?.requestOptions.uri} start ]---------------");

@@ -1,50 +1,51 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, unused_local_variable
-
 import 'package:dio/dio.dart';
 import 'package:dio_adapter/src/errors/status_code.dart';
 import 'exception_model.dart';
 
-const _connectionTimeoutError = 'connectionTimeoutError';
-const _noInternetConnection = 'noInternetConnection';
-const _internalServerError = 'internal server error';
-const _undefineError = 'undefine error';
+const String _connectionTimeoutError = 'connectionTimeoutError';
+const String _noInternetConnection = 'noInternetConnection';
+const String _internalServerError = 'internal server error';
+const String _undefinedError = 'undefined error';
+const String _cancelRequestError = 'Request was cancelled';
 
 ServerException handleDioError(DioException error) {
-  ServerException? serverException;
   switch (error.type) {
     case DioExceptionType.connectionTimeout:
     case DioExceptionType.sendTimeout:
     case DioExceptionType.receiveTimeout:
-      serverException = const FetchDataException(_connectionTimeoutError);
+      return const FetchDataException(_connectionTimeoutError);
+
     case DioExceptionType.badResponse:
-      switch (error.response!.statusCode) {
+      final statusCode = error.response?.statusCode;
+      final errorMessage = error.message.toString();
+
+      switch (statusCode) {
         case StatusCode.badRequest:
-          serverException = BadRequestException(error.message.toString());
+          return BadRequestException(errorMessage);
         case StatusCode.unauthorized:
         case StatusCode.forbidden:
-          serverException = UnauthorizedException(error.message.toString());
+          return UnauthorizedException(errorMessage);
         case StatusCode.notFound:
-          serverException = NotFoundException(error.message.toString());
+          return NotFoundException(errorMessage);
         case StatusCode.conflict:
-          serverException = ConflictException(error.message.toString());
+          return ConflictException(errorMessage);
         case StatusCode.unProcessableEntity:
-          serverException =
-              UnProcessableEntityException(error.message.toString());
+          return UnProcessableEntityException(errorMessage);
         case StatusCode.internalServerError:
-          serverException = InternalServerErrorException(_internalServerError);
+          return InternalServerErrorException(_internalServerError);
         default:
-          serverException = const FetchDataException(_connectionTimeoutError);
+          return const FetchDataException(_connectionTimeoutError);
       }
+
     case DioExceptionType.cancel:
-      break;
+      return ServerException(_cancelRequestError);
+
     case DioExceptionType.unknown:
-      serverException = const NoInternetException(_noInternetConnection);
     case DioExceptionType.badCertificate:
-      serverException = const NoInternetException(_noInternetConnection);
     case DioExceptionType.connectionError:
-      serverException = const NoInternetException(_noInternetConnection);
+      return const NoInternetException(_noInternetConnection);
+
     default:
-      serverException = const ServerException(_undefineError);
+      return const ServerException(_undefinedError);
   }
-  return serverException!;
 }
