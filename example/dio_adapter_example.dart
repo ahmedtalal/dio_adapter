@@ -6,7 +6,7 @@ void main() async {
     baseUrl: 'https://jsonplaceholder.typicode.com',
     connectTimeout: Duration(seconds: 10000),
     receiveTimeout: Duration(seconds: 10000),
-    contentType: "application/json",
+    contentTypeEnum: ContentTypeEnum.applicationJson,
     responseTypeEnum: ResponseTypeEnum.json,
     customRequestHandler: (options) async{
       /// todo:you logic here

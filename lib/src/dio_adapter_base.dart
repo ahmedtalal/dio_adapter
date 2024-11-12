@@ -13,14 +13,14 @@ class DioAdapterBase implements IApiCurds {
   final Future<RequestOptions> Function(RequestOptions options)? customRequestHandler;
   final Future<Response> Function(Response response)? customResponseHandler;
   final Future<DioException> Function(DioException error)? customErrorHandler;
-  final String contentType;
+  final ContentTypeEnum contentTypeEnum;
   final Duration connectTimeout, receiveTimeout;
   final ResponseTypeEnum responseTypeEnum;
   DioAdapterBase({
     required this.baseUrl,
     required this.connectTimeout,
     required this.receiveTimeout,
-    required this.contentType,
+    required this.contentTypeEnum,
     required this.customRequestHandler,
     required this.customResponseHandler,
     required this.customErrorHandler,
@@ -48,13 +48,31 @@ class DioAdapterBase implements IApiCurds {
     }
   }
 
+  /// is used to detect the type of request content and return it
+  String _detectContentType() {
+    switch (contentTypeEnum) {
+      case ContentTypeEnum.applicationJson:
+        return 'application/json';
+      case ContentTypeEnum.applicationXml:
+        return 'application/xml';
+      case ContentTypeEnum.textPlain:
+        return 'text/plain';
+      case ContentTypeEnum.applicationXWwwFormUrlencoded:
+        return 'application/x-www-form-urlencoded';
+      case ContentTypeEnum.multipartFormData:
+        return 'multipart/form-data';
+      case ContentTypeEnum.applicationOctetStream:
+        return 'application/octet-stream';
+    }
+  }
+
   /// this function to initialize dio package
   _init() {
     BaseOptions options = BaseOptions(
       baseUrl: baseUrl,
       receiveDataWhenStatusError: true,
       responseType: _detectResponseType(),
-      contentType: contentType,
+      contentType: _detectContentType(),
       connectTimeout: connectTimeout,
       receiveTimeout: receiveTimeout,
     );
