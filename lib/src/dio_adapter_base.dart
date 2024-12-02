@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_adapter/src/dio_helper/api_curds.dart';
@@ -10,9 +11,14 @@ import 'package:either_dart/either.dart';
 
 class DioAdapterBase implements IApiCurds {
   final String baseUrl;
-  final Future<RequestOptions> Function(RequestOptions options)? customRequestHandler;
-  final Future<Response> Function(Response response)? customResponseHandler;
-  final Future<DioException> Function(DioException error)? customErrorHandler;
+  final Future<RequestOptions> Function(
+          RequestOptions options, RequestInterceptorHandler handler)?
+      customRequestHandler;
+  final Future<Response> Function(
+          Response response, ResponseInterceptorHandler handler)?
+      customResponseHandler;
+  final Future<DioException> Function(
+      DioException error, ErrorInterceptorHandler handler)? customErrorHandler;
   final ContentTypeEnum contentTypeEnum;
   final Duration connectTimeout, receiveTimeout;
   final ResponseTypeEnum responseTypeEnum;

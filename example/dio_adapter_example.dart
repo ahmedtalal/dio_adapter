@@ -8,16 +8,24 @@ void main() async {
     receiveTimeout: Duration(seconds: 10000),
     contentTypeEnum: ContentTypeEnum.applicationJson,
     responseTypeEnum: ResponseTypeEnum.json,
-    customRequestHandler: (options) async{
-      /// todo:you logic here
+    customRequestHandler: (options, handler) async {
+      // Do something before request is sent.
+      // If you want to resolve the request with custom data,
+      // you can resolve a `Response` using `handler.resolve(response)`.
+      // If you want to reject the request with a error message,
+      // you can reject with a `DioException` using `handler.reject(dioError)`.
       return options;
     },
-    customResponseHandler: (response) async{
-      /// todo:you logic here
+    customResponseHandler: (response, handler) async {
+      // Do something with response data.
+      // If you want to reject the request with a error message,
+      // you can reject a `DioException` object using `handler.reject(dioError)`.
       return response;
     },
-    customErrorHandler: (error) async{
-      /// todo:you logic here
+    customErrorHandler: (error, handler) async {
+      // Do something with response error.
+      // If you want to resolve the request with some custom data,
+      // you can resolve a `Response` object using `handler.resolve(response)`.
       return error;
     },
   );
@@ -30,14 +38,20 @@ void main() async {
   );
 
   //Example POST request
-  final postResult = await dioBuilder.post('/posts', body: {'title': 'foo', 'body': 'bar', 'userId': 1});
+  final postResult = await dioBuilder
+      .post('/posts', body: {'title': 'foo', 'body': 'bar', 'userId': 1});
   postResult.fold(
     (error) => print('POST Error: $error'),
     (response) => print('POST Response: ${response.data}'),
   );
 
   // Example PUT request
-  final putResult = await dioBuilder.put('/posts/1', body: {'id': 1, 'title': 'updated title', 'body': 'updated body', 'userId': 1});
+  final putResult = await dioBuilder.put('/posts/1', body: {
+    'id': 1,
+    'title': 'updated title',
+    'body': 'updated body',
+    'userId': 1
+  });
   putResult.fold(
     (error) => print('PUT Error: $error'),
     (response) => print('PUT Response: ${response.data}'),

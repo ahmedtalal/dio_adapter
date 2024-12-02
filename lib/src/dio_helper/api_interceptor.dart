@@ -1,11 +1,15 @@
-
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
 class CustomInterceptors extends Interceptor {
-  final Future<RequestOptions> Function(RequestOptions options)? customRequestHandler;
-  final Future<Response> Function(Response response)? customResponseHandler;
-  final Future<DioException> Function(DioException error)? customErrorHandler;
+  final Future<RequestOptions> Function(
+          RequestOptions options, RequestInterceptorHandler handler)?
+      customRequestHandler;
+  final Future<Response> Function(
+          Response response, ResponseInterceptorHandler handler)?
+      customResponseHandler;
+  final Future<DioException> Function(
+      DioException error, ErrorInterceptorHandler handler)? customErrorHandler;
   const CustomInterceptors({
     required this.customRequestHandler,
     required this.customResponseHandler,
@@ -18,20 +22,21 @@ class CustomInterceptors extends Interceptor {
         : Level.debug, // Disable logs in release mode
   );
   @override
-  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     /// add custom request handler
     if (customRequestHandler != null) {
-      options = await customRequestHandler!(options);
+      options = await customRequestHandler!(options, handler);
     }
 
-    dynamic data ; // variable to store data
+    dynamic data; // variable to store data
     /// Check if the content type is form-data
     if (options.headers['Content-Type'] == 'multipart/form-data') {
-      if(options.data is FormData){
+      if (options.data is FormData) {
         FormData formData = options.data as FormData;
         data = _formDataToMap(formData);
       }
-    }else {
+    } else {
       data = options.data;
     }
 
@@ -50,10 +55,11 @@ class CustomInterceptors extends Interceptor {
   }
 
   @override
-  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async{
+  Future<void> onResponse(
+      Response response, ResponseInterceptorHandler handler) async {
     /// add custom response handler
     if (customResponseHandler != null) {
-      response = await customResponseHandler!(response);
+      response = await customResponseHandler!(response, handler);
     }
     _logger.i(
         "-----------------[ response of request ${response.requestOptions.uri} start ]---------------");
@@ -74,10 +80,11 @@ class CustomInterceptors extends Interceptor {
   }
 
   @override
-  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async{
+  Future<void> onError(
+      DioException err, ErrorInterceptorHandler handler) async {
     /// add custom error handler
     if (customErrorHandler != null) {
-     err= await customErrorHandler!(err);
+      err = await customErrorHandler!(err, handler);
     }
     _logger.i(
         "-----------------[ error of request ${err.response?.requestOptions.uri} start ]---------------");
@@ -100,7 +107,7 @@ class CustomInterceptors extends Interceptor {
 
   void _printPrettyJson(
       Map<String, dynamic> jsonData, String tag, String logType) {
-   // const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+    // const JsonEncoder encoder = JsonEncoder.withIndent('  ');
     String prettyJson = jsonData.toString();
     switch (logType.toLowerCase()) {
       case "request":
@@ -111,7 +118,7 @@ class CustomInterceptors extends Interceptor {
           "$tag : $prettyJson",
         );
         break;
-        case "error":
+      case "error":
         _logger.e(
           "$tag : $prettyJson",
         );
