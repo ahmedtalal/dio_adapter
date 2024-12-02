@@ -11,9 +11,31 @@ void main() async {
     customRequestHandler: (options, handler) async {
       // Do something before request is sent.
       // If you want to resolve the request with custom data,
-      // you can resolve a `Response` using `handler.resolve(response)`.
+      // you can resolve a `Response` using `handler.resolve(response)` like this
+      //// Check if the request matches a condition (e.g., specific URL or headers)
+      //       if (options.path.contains("/mock-endpoint")) {
+      //         // Create a mock Response
+      //         final mockResponse = Response(
+      //           requestOptions: options,
+      //           data: {"message": "This is a mock response"},
+      //           statusCode: 200,
+      //           statusMessage: "OK",
+      //         );
+      //         // Resolve the request with the mock response
+      //         return handler.resolve(mockResponse);
+      //       }
       // If you want to reject the request with a error message,
-      // you can reject with a `DioException` using `handler.reject(dioError)`.
+      // you can reject with a `DioException` using `handler.reject(dioError)` like this
+      //  final token = options.headers["Authorization"];
+      //       if (token == null || token.isEmpty) {
+      //         return handler.reject(
+      //           DioException(
+      //             requestOptions: options,
+      //             type: DioExceptionType.badResponse,
+      //             error: "Unauthorized: Missing or invalid token",
+      //           ),
+      //         );
+      //       }
       return options;
     },
     customResponseHandler: (response, handler) async {
