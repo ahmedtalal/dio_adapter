@@ -6,7 +6,6 @@ Enhanced Interceptor Customization: Updated the CustomInterceptors class to allo
 
 Improved Error Handling and Logging: Refined error handling mechanisms for better accuracy and granularity. Enhanced logging now provides clearer, more detailed insights into request/response data, making debugging and monitoring easier.
 
-
 ## 1.8.0
 
 - In this version, Added a ContentTypeEnum to represent commonly used content types (application/json, application/xml, text/plain, application/x-www-form-urlencoded, multipart/form-data, application/octet-stream). Each type now includes a string representation for easy integration into request headers.
@@ -15,3 +14,7 @@ Improved Error Handling and Logging: Refined error handling mechanisms for bette
 ## 1.9.0
 
 - In this version, Added extra parameter 'handler' to customRequestHandler, customResponseHandler, and customErrorHandler. This parameter allows for asynchronous handling of request and response data during custom handlers.
+
+## 2.0.0
+
+- In this version, handle some warning in the pacakge and enhancement in prettyjson method to print response in a better format .
