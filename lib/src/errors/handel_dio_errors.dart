@@ -5,7 +5,7 @@ import 'exception_model.dart';
 const String _connectionTimeoutError = 'connectionTimeoutError';
 const String _noInternetConnection = 'noInternetConnection';
 const String _internalServerError = 'internal server error';
-const String _undefinedError = 'undefined error';
+//const String _undefinedError = 'undefined error';
 const String _cancelRequestError = 'Request was cancelled';
 
 ServerException handleDioError(DioException error) {

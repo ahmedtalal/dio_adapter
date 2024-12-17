@@ -1,6 +1,6 @@
 name: dio_adapter
 description: A Dart package for simplifying HTTP requests using Dio, with customizable handling for API CRUD operations and errors.
-version: 2.0.0
+version: 2.0.1
 repository: https://github.com/ahmedtalal/dio_adapter
 
 environment:

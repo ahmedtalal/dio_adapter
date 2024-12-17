@@ -18,3 +18,7 @@ Improved Error Handling and Logging: Refined error handling mechanisms for bette
 ## 2.0.0
 
 - In this version, handle some warning in the pacakge and enhancement in prettyjson method to print response in a better format .
+
+## 2.0.1
+
+- In this version, handle some warning in the pacakge
