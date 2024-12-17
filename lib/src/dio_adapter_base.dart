@@ -49,8 +49,8 @@ class DioAdapterBase implements IApiCurds {
         return ResponseType.stream;
       case ResponseTypeEnum.plain:
         return ResponseType.plain;
-      default:
-        return ResponseType.json;
+      // default:
+      //   return ResponseType.json;
     }
   }
 

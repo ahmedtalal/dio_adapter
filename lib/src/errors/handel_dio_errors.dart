@@ -45,7 +45,7 @@ ServerException handleDioError(DioException error) {
     case DioExceptionType.connectionError:
       return const NoInternetException(_noInternetConnection);
 
-    default:
-      return const ServerException(_undefinedError);
+    // default:
+    //   return const ServerException(_undefinedError);
   }
 }

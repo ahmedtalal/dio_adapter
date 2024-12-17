@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -107,8 +109,15 @@ class CustomInterceptors extends Interceptor {
 
   void _printPrettyJson(
       Map<String, dynamic> jsonData, String tag, String logType) {
-    // const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-    String prettyJson = jsonData.toString();
+    String prettyJson;
+    try {
+      // Attempt to pretty-print the JSON
+      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+      prettyJson = encoder.convert(jsonData);
+    } catch (e) {
+      // Fallback to a basic string representation if serialization fails
+      prettyJson = jsonData.toString();
+    }
     switch (logType.toLowerCase()) {
       case "request":
         _logger.d("$tag : $prettyJson");
