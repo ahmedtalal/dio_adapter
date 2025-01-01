@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:crypto/crypto.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:dio_adapter/src/dio_helper/api_curds.dart';
@@ -22,6 +25,7 @@ class DioAdapterBase implements IApiCurds {
   final ContentTypeEnum contentTypeEnum;
   final Duration connectTimeout, receiveTimeout;
   final ResponseTypeEnum responseTypeEnum;
+  final String? sslCertificateSHa256;
   DioAdapterBase({
     required this.baseUrl,
     required this.connectTimeout,
@@ -31,6 +35,7 @@ class DioAdapterBase implements IApiCurds {
     required this.customResponseHandler,
     required this.customErrorHandler,
     required this.responseTypeEnum,
+    required this.sslCertificateSHa256,
   }) {
     _init();
     _httpAdapter();
@@ -92,11 +97,27 @@ class DioAdapterBase implements IApiCurds {
         final client = HttpClient();
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) {
+          if (sslCertificateSHa256 != null) {
+            // 1. Extract the server certificate in DER format (binary)
+            final Uint8List der = cert.der;
+            // 2. Calculate the SHA-256 fingerprint of the certificate
+            final String serverFingerprint = _sha256Digest(der);
+            // 3. Compare with the expected (trusted) fingerprint
+            final String expectedFingerprint = sslCertificateSHa256!;
+            // 4. Return true if they match, false otherwise
+            return serverFingerprint == expectedFingerprint;
+          }
           return true;
         };
         return client;
       },
     );
+  }
+
+  /// Function to compute the SHA-256 digest of a certificate
+  String _sha256Digest(Uint8List data) {
+    final digest = sha256.convert(data); // Calculate SHA-256
+    return base64.encode(digest.bytes); // Encode the hash in Base64
   }
 
   /// this function to add interceptor to dio client
