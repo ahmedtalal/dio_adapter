@@ -23,7 +23,11 @@ Improved Error Handling and Logging: Refined error handling mechanisms for bette
 
 - In this version, handle some warning in the pacakge
 
-
 ## 2.1.1
 
 - In this version,add the logic of ssl pinning to the package
+
+## 2.1.2
+
+- In this version, fixed error in ssl pinning implementation.
+- some enhancement in the model of error handeling .

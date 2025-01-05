@@ -94,7 +94,8 @@ class DioAdapterBase implements IApiCurds {
   _httpAdapter() {
     _dioClient.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
-        final client = HttpClient();
+        final client =
+            HttpClient(context: SecurityContext(withTrustedRoots: false));
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) {
           if (sslCertificateSHa256 != null) {

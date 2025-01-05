@@ -41,7 +41,9 @@ ServerException handleDioError(DioException error) {
       return ServerException(_cancelRequestError);
 
     case DioExceptionType.unknown:
+      return ServerException(error.toString());
     case DioExceptionType.badCertificate:
+      return ServerException(error.toString());
     case DioExceptionType.connectionError:
       return const NoInternetException(_noInternetConnection);
 

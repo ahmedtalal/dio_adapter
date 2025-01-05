@@ -8,7 +8,8 @@ void main() async {
     receiveTimeout: Duration(seconds: 10000),
     contentTypeEnum: ContentTypeEnum.applicationJson,
     responseTypeEnum: ResponseTypeEnum.json,
-    sslCertificateSHa256: null,
+    sslCertificateSHa256:
+        "drJ7gKWAJ9w88dpo2sFwEO2TmX0LYD4vrb6FASSTtac=", // this value must be store in a secure place such as .env file and not committed to source control
     customRequestHandler: (options, handler) async {
       // Do something before request is sent.
       // If you want to resolve the request with custom data,
